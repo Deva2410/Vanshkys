@@ -1,0 +1,41 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data for each metal
+data = {
+    "Sodium": {
+        "frequency": [2.00e15, 1.20e15, 1.00e15, 8.57e14, 7.50e14, 6.67e14],
+        "kinetic_energy": [-9.60e-19, -4.80e-19, -2.88e-19, -1.92e-19, -1.60e-19, -9.60e-20]
+    },
+    "Calcium": {
+        "frequency": [2.00e15, 1.20e15, 1.00e15, 8.57e14, 7.50e14, 6.67e14],
+        "kinetic_energy": [-9.60e-19, -4.80e-19, -2.88e-19, -1.92e-19, None, None]
+    },
+    "Copper": {
+        "frequency": [2.00e15, 1.20e15, 1.00e15, 8.57e14, 7.50e14, 6.67e14],
+        "kinetic_energy": [-6.08e-19, 0, 0, 0, 0, 0]
+    }
+}
+
+# Plotting the graphs
+plt.figure(figsize=(12, 6))
+
+for metal, values in data.items():
+    frequencies = np.array(values["frequency"])
+    kinetic_energies = np.array(values["kinetic_energy"], dtype=np.float64)
+    
+    # Filter out None values
+    mask = ~np.isnan(kinetic_energies)
+    frequencies = frequencies[mask]
+    kinetic_energies = kinetic_energies[mask]
+    
+    # Plotting
+    plt.plot(frequencies, kinetic_energies, marker='o', label=metal)
+
+# Graph details
+plt.title("Frequency vs Maximum Kinetic Energy for Different Metals")
+plt.xlabel("Frequency (Hz)")
+plt.ylabel("Maximum Kinetic Energy (J)")
+plt.legend()
+plt.grid(True)
+plt.show()
